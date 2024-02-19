@@ -42,7 +42,7 @@ services:
     networks:
       vpcbr:
         ipv4_address: 10.5.0.3
-    image: "gossip-price"
+    image: redbird9623/gossip-price:latest
     environment:
       GP_BOOTSTRAP: "true"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8000"
@@ -53,7 +53,7 @@ services:
         condition: service_healthy
 
   node1:
-    image: "gossip-price"
+    image: redbird9623/gossip-price:latest
     networks:
       vpcbr:
         ipv4_address: 10.5.0.4
@@ -71,7 +71,7 @@ services:
       - bootstrap
 
   node2:
-    image: "gossip-price"
+    image: redbird9623/gossip-price:latest
     networks:
       vpcbr:
         ipv4_address: 10.5.0.5
@@ -89,7 +89,7 @@ services:
       - bootstrap
 
   node3:
-    image: "gossip-price"
+    image: redbird9623/gossip-price:latest
     networks:
       vpcbr:
         ipv4_address: 10.5.0.6
@@ -107,7 +107,7 @@ services:
       - bootstrap
 
   node4:
-    image: "gossip-price"
+    image: redbird9623/gossip-price:latest
     networks:
       vpcbr:
         ipv4_address: 10.5.0.7
