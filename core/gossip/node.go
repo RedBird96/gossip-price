@@ -17,7 +17,6 @@ import (
 	"gossip-price/core/global"
 	"log"
 	"sync"
-	"time"
 )
 
 type Validator func(ctx context.Context, topic string, id peer.ID, msg *pubsub.Message) pubsub.ValidationResult
@@ -113,7 +112,6 @@ func (n *Node) Start(ctx context.Context) error {
 		}
 	}
 
-	go n.ListeningConnectedNode()
 	return nil
 }
 
@@ -270,16 +268,6 @@ func (n *Node) ConnecetedAddressStrings() []string {
 		strs = append(strs, fmt.Sprintf("%s/p2p/%s", addr.String(), n.host.ID()))
 	}
 	return strs
-}
-
-func (n *Node) ListeningConnectedNode() {
-	for {
-		select {
-		case <-time.After(time.Second * 10):
-			peers := n.Host().Network().Peers()
-			log.Printf("Connected peers:%d", len(peers))
-		}
-	}
 }
 
 // validator validates message of specific topic, and returns true or false
