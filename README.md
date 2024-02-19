@@ -27,7 +27,7 @@ be moved to verified list. Every 30 seconds we check if there is verified data t
 1. libp2p library for implementing distributed gossip system. 
 
    ```bash
-   go install github.com/libp2p/go-libp2p-kad-dht
+   go install github.com/libp2p/
    ```
 2. PostgreSQL database for storing signed data. This is the table description.
 
