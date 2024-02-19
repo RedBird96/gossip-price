@@ -58,7 +58,7 @@ services:
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8001"
-      GP_BOOTSTRAPADDR: "/ip4/127.0.0.1/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
     depends_on:
@@ -74,7 +74,7 @@ services:
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8002"
-      GP_BOOTSTRAPADDR: "/ip4/database/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
     depends_on:
@@ -90,7 +90,7 @@ services:
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8003"
-      GP_BOOTSTRAPADDR: "/ip4/database/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
     depends_on:
@@ -106,7 +106,7 @@ services:
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8004"
-      GP_BOOTSTRAPADDR: "/ip4/database/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
     depends_on:
