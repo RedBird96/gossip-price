@@ -63,7 +63,7 @@ services:
       GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
-      GP_FETCHPRICEINTERVAL: "60"
+      GP_FETCHPRICEINTERVAL: "5"
     depends_on:
       db:
         condition: service_healthy
@@ -81,7 +81,7 @@ services:
       GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
-      GP_FETCHPRICEINTERVAL: "60"
+      GP_FETCHPRICEINTERVAL: "5"
     depends_on:
       db:
         condition: service_healthy
@@ -99,7 +99,7 @@ services:
       GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
-      GP_FETCHPRICEINTERVAL: "60"
+      GP_FETCHPRICEINTERVAL: "5"
     depends_on:
       db:
         condition: service_healthy
@@ -117,7 +117,7 @@ services:
       GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
       GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
-      GP_FETCHPRICEINTERVAL: "60"
+      GP_FETCHPRICEINTERVAL: "5"
     depends_on:
       db:
         condition: service_healthy
