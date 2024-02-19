@@ -1,0 +1,103 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: postgres
+    image: postgres:15.2
+    restart: always
+    networks:
+      new:
+        aliases:
+          - database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rate
+      POSTGRES_DB: rate
+    ports:
+      - "5431:5432"
+    healthcheck:
+      test: pg_isready -U postgres -d rate
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    container_name: rate_migrate
+    depends_on:
+      db:
+        condition: service_healthy
+    image: arigaio/atlas:latest
+    volumes:
+      - "./migrations:/tmp/migrations"
+    networks:
+      - new
+    command: >
+      schema apply \
+        --auto-approve \
+        --url postgres://postgres:rate@database:5432/rate?sslmode=disable \
+        --to "file://tmp/migrations/schema.hcl" \
+        --dev-url postgres://postgres:rate@database:5432/rate?sslmode=disable
+
+  bootstrap:
+    networks:
+      - new
+    image: "gossip-price"
+    environment:
+      GP_BOOTSTRAP: "true"
+      GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8000"
+      GP_BOOTSTRAPADDR: ""
+      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  node1:
+    image: "gossip-price"
+    networks:
+      - new
+    environment:
+      GP_BOOTSTRAP: "false"
+      GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8001"
+      GP_BOOTSTRAPADDR: "/ip4/127.0.0.1/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_MINIMUMSIGNERCOUNT: "3"
+      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - bootstrap
+
+  node2:
+    image: "gossip-price"
+    networks:
+      - new
+    environment:
+      GP_BOOTSTRAP: "false"
+      GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8002"
+      GP_BOOTSTRAPADDR: "/ip4/database/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_MINIMUMSIGNERCOUNT: "3"
+      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - bootstrap
+
+  node3:
+    image: "gossip-price"
+    networks:
+      - new
+    environment:
+      GP_BOOTSTRAP: "false"
+      GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8003"
+      GP_BOOTSTRAPADDR: "/ip4/database/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_MINIMUMSIGNERCOUNT: "3"
+      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - bootstrap
+
+networks:
+  new:
