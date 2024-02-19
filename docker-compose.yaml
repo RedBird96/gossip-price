@@ -99,5 +99,20 @@ services:
     links:
       - bootstrap
 
+  node4:
+    image: "gossip-price"
+    networks:
+      - new
+    environment:
+      GP_BOOTSTRAP: "false"
+      GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8004"
+      GP_BOOTSTRAPADDR: "/ip4/database/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_MINIMUMSIGNERCOUNT: "3"
+      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - bootstrap
 networks:
   new:
