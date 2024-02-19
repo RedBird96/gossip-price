@@ -75,4 +75,4 @@ docker-compose -f docker-compose.yaml up -d
 - We have to implement the monitoring system to maintain the connection of each node.
 - We have to implement the node distributed monitoring system to maintenance node receiving counts.
 
-
+![postgres.png](postgres.png)
