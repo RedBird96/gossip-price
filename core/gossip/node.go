@@ -17,6 +17,7 @@ import (
 	"gossip-price/core/global"
 	"log"
 	"sync"
+	"time"
 )
 
 type Validator func(ctx context.Context, topic string, id peer.ID, msg *pubsub.Message) pubsub.ValidationResult
@@ -112,6 +113,7 @@ func (n *Node) Start(ctx context.Context) error {
 		}
 	}
 
+	go n.ShowConnectedNode()
 	return nil
 }
 
@@ -300,5 +302,19 @@ func (n *ValidatorSet) Validator(title string) pubsub.ValidatorEx {
 			}
 		}
 		return pubsub.ValidationAccept
+	}
+}
+
+func (n *Node) ShowConnectedNode() {
+	var oldPeers = 0
+	for {
+		select {
+		case <-time.After(time.Second * 10):
+			peers := n.Host().Network().Peers()
+			if len(peers) != oldPeers {
+				log.Printf("Conection counts updated:%d", len(peers))
+			}
+			oldPeers = len(peers)
+		}
 	}
 }

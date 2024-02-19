@@ -24,6 +24,9 @@ type Engine struct {
 // New returns a new consensus engine of protocol with engine data
 func NewEngine() *Engine {
 	dbTmp := db.NewDatabase()
+	if dbTmp == nil {
+		return nil
+	}
 	return &Engine{
 		database:      dbTmp,
 		data:          make(map[string][]protocol.ProtocolMessage),

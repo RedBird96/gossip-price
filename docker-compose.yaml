@@ -6,9 +6,8 @@ services:
     image: postgres:15.2
     restart: always
     networks:
-      new:
-        aliases:
-          - database
+      vpcbr:
+        ipv4_address: 10.5.0.10
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: rate
@@ -30,23 +29,25 @@ services:
     volumes:
       - "./migrations:/tmp/migrations"
     networks:
-      - new
+      vpcbr:
+        ipv4_address: 10.5.0.2
     command: >
       schema apply \
         --auto-approve \
-        --url postgres://postgres:rate@database:5432/rate?sslmode=disable \
+        --url postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable \
         --to "file://tmp/migrations/schema.hcl" \
-        --dev-url postgres://postgres:rate@database:5432/rate?sslmode=disable
+        --dev-url postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable
 
   bootstrap:
     networks:
-      - new
+      vpcbr:
+        ipv4_address: 10.5.0.3
     image: "gossip-price"
     environment:
       GP_BOOTSTRAP: "true"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8000"
       GP_BOOTSTRAPADDR: ""
-      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+      GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
     depends_on:
       db:
         condition: service_healthy
@@ -54,13 +55,14 @@ services:
   node1:
     image: "gossip-price"
     networks:
-      - new
+      vpcbr:
+        ipv4_address: 10.5.0.4
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8001"
-      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
-      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+      GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
     depends_on:
       db:
         condition: service_healthy
@@ -70,13 +72,14 @@ services:
   node2:
     image: "gossip-price"
     networks:
-      - new
+      vpcbr:
+        ipv4_address: 10.5.0.5
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8002"
-      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
-      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+      GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
     depends_on:
       db:
         condition: service_healthy
@@ -86,13 +89,14 @@ services:
   node3:
     image: "gossip-price"
     networks:
-      - new
+      vpcbr:
+        ipv4_address: 10.5.0.6
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8003"
-      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
-      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+      GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
     depends_on:
       db:
         condition: service_healthy
@@ -102,17 +106,23 @@ services:
   node4:
     image: "gossip-price"
     networks:
-      - new
+      vpcbr:
+        ipv4_address: 10.5.0.7
     environment:
       GP_BOOTSTRAP: "false"
       GP_CONNECTIONADDR: "/ip4/0.0.0.0/tcp/8004"
-      GP_BOOTSTRAPADDR: "/ip4/192.168.160.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
+      GP_BOOTSTRAPADDR: "/ip4/10.5.0.3/tcp/8000/p2p/12D3KooWNKned68ut2K6r6kniCzLqTdw4mi3rH69TWEEhzkTMnaH"
       GP_MINIMUMSIGNERCOUNT: "3"
-      GP_DATABASEURL: "postgres://postgres:rate@database:5432/rate?sslmode=disable"
+      GP_DATABASEURL: "postgres://postgres:rate@10.5.0.10:5432/rate?sslmode=disable"
     depends_on:
       db:
         condition: service_healthy
     links:
       - bootstrap
 networks:
-  new:
+  vpcbr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

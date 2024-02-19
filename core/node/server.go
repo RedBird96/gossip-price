@@ -28,7 +28,7 @@ func NewGossipServer() (*Server, error) {
 
 	en := consensus.NewEngine()
 	pro, err := protocol.New(config)
-	if err != nil {
+	if err != nil || en == nil {
 		return nil, errors.New("New Gossip Server error")
 	}
 

@@ -5,8 +5,8 @@ import (
 	pgxuuid "github.com/jackc/pgx-gofrs-uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/rs/zerolog/log"
 	"gossip-price/core/global"
+	"log"
 )
 
 type Database struct {
@@ -38,7 +38,8 @@ func NewDatabase() *Database {
 
 	err = conn.Ping(context.Background())
 	if err != nil {
-		log.Fatal().Err(err).Msgf("Error connecting to the database. ")
+		log.Print("Error connecting to the database. ")
+		return nil
 	}
 	return &Database{Conn: conn}
 }
@@ -53,6 +54,7 @@ func (d *Database) CreateRate(user *Rate) (*Rate, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("Message(%s) is added to database", user.ID)
 	return user, nil
 }
 
