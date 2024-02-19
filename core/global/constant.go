@@ -6,5 +6,5 @@ var (
 	GPConnectionAddress  = EnvString("GP_CONNECTIONADDR", "/ip4/0.0.0.0/tcp/8000")
 	GPBootstrapAddress   = EnvString("GP_BOOTSTRAPADDR", "")
 	GPMinimumSignerCount = EnvInt("GP_MINIMUMSIGNERCOUNT", 3)
-	GPFetchPriceInterval = EnvInt("GP_FETCHPRICEINTERVAL", 10)
+	GPFetchPriceInterval = EnvInt("GP_FETCHPRICEINTERVAL", 60)
 )
