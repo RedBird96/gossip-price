@@ -1,4 +1,4 @@
-# Go with GOSSIP-PRICE SYSTEM
+# Go with GOSSIP-PRICE DISTRIBUTED SYSTEM
 
 This repository demonstrates how to build and deploy distributed system using libP2p library.
 
