@@ -16,6 +16,7 @@ type ExchangeRate struct {
 
 // Fetch eth usd price from coinbase
 func GetETHPrice() (float64, error) {
+
 	url := "https://api.coinbase.com/v2/exchange-rates?currency=ETH"
 
 	response, err := http.Get(url)

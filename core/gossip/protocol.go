@@ -31,10 +31,10 @@ const maxConnections = 150
 
 // Config is the configuration for the Protocol communication.
 type Config struct {
-	// ConnectedAddress is a list of multiaddresses on which this node will be
+	// ConnectedAddress is a list of multi addresses on which this node will be
 	// listening on. If empty, the localhost, and a random port will be used.
 	ConnectedAddress []string
-	// BootstrapAddress is a list multiaddresses of initial peers to connect to.
+	// BootstrapAddress is a list multi addresses of initial peers to connect to.
 	// This option is ignored when discovery is disabled.
 	BootstrapAddress []string
 	// NodeKey is a key used for peer identity and sign message. If empty, then random key

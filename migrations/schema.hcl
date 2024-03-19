@@ -20,8 +20,8 @@ table "rate" {
     null = false
     type = timestamp
   }
-  column "created_time" {
-    null = false
+  column "created_time" {//
+//    null = false
     type = timestamp
   }
   primary_key {
